@@ -126,17 +126,16 @@ while var:
             if 220 <= mouse[0] <= 420 and 300 <= mouse[1] <= 400:
                 var = False
 
-
-
-base_font = pygame.font.Font(None, 32)
+base_font = pygame.font.Font(None, 50)
 user_text = ''
 
-# create rectangle
-input_rect = pygame.Rect(200, 200, 140, 32)
+name_font = pygame.font.Font('freesansbold.ttf', 30)
+name_text = name_font.render('WHAT IS THE NAME OF YOUR ROBOT?', True, (0, 0, 0))
 
-# color_active stores color(lightskyblue3) which
-# gets active when input box is clicked by user
-color_active = pygame.Color('lightskyblue3')
+# create rectangle
+input_rect = pygame.Rect(255, 100, 140, 50)
+
+color_active = pygame.Color('black')
 
 # color_passive store color(chartreuse4) which is
 # color of input box.
@@ -172,10 +171,11 @@ while True:
             else:
                 user_text += event.unicode
 
-            robot = Robot(user_text)
+        robot = Robot(user_text)
     # it will set background color of screen
     screen.fill((50, 255, 50))
 
+    screen.blit(name_text, (40, 40))
     if active:
         color = color_active
     else:
@@ -193,7 +193,7 @@ while True:
     # set width of textfield so that text cannot get
     # outside of user's text input
     input_rect.w = max(100, text_surface.get_width() + 10)
-    
+
     button = pygame.Rect((220, 300), (200, 100))
     screen.fill('dodgerblue', rect=button)
     pygame.draw.line(screen, (0, 0, 0), (220, 300), (420, 300), 10)
@@ -204,7 +204,7 @@ while True:
     button_text = button_font.render('FIGHT', True, (0, 0, 0))
     screen.blit(button_text, (245, 330))
     pygame.display.flip()
-
+    
     # display.flip() will update only a portion of the
     # screen to updated, not full area
     pygame.display.flip()
@@ -227,7 +227,7 @@ while True:
             #fight(robot, evil_robot)
             #ans = "y"
 
-    if robot.health <= evil_robot.health:
-        print("You lost!")
-    else:
-        print("You won!")
+if robot.health <= evil_robot.health:
+    print("You lost!")
+else:
+    print("You won!")
