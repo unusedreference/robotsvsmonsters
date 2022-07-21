@@ -5,15 +5,15 @@ class Robot:
 
     def __init__(self, name):
         self.name = name
-        self.health = 100.0
-        self.base_armor = 10.0
-        self.base_damage = 10.0
-        self.speed = 10.0
+        self.health = 100
+        self.base_armor = 10
+        self.base_damage = 10
+        self.speed = 10
 
     def take_damage(self, damage_dealt):
         self.health -= damage_dealt
-        self.speed -= .5
-        self.base_armor -= .5
+        self.speed -= 1
+        self.base_armor -= 1
 
     def attack(self, opponent):
         damage_dealt = self.base_damage + (self.speed / 4) - (
@@ -57,8 +57,9 @@ class Robot:
                 self.attack(player)
                 c = "You have been attacked!"
         elif self.base_armor < 5 or player.speed > 20 or player.base_armor > 20:
-            self.build_armor()
-            c = "Your opponent built armor."
+            if self.speed > 1 and self.base_damage > 1:
+                self.build_armor()
+                c = "Your opponent built armor."
         elif player.base_damage > 12 or self.base_damage < 10 or player.speed > 12:
             self.build_attack()
             c = "Your opponent has built attack damage."

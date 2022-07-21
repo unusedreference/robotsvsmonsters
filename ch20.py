@@ -18,8 +18,8 @@ screen.blit(welcome_text2, (50, 200))
 # add images
 image = pygame.image.load(r'C:\Users\Student\Desktop\DylanH\robot4.png')
 screen.blit(image, (30, 20))
-image = pygame.image.load(r'C:\Users\Student\Desktop\DylanH\monster4.png')
-screen.blit(image, (480, 20))
+image2 = pygame.image.load(r'C:\Users\Student\Desktop\DylanH\monster4.png')
+screen.blit(image2, (480, 20))
 # draws button
 button = pygame.Rect((220, 300), (200, 100))
 screen.fill('red3', rect=button)
@@ -73,6 +73,8 @@ def fight(player, opponent):
 
     screen.blit(text2, (497, 370))
     screen.blit(text4, (490, 400))
+
+    screen.blit(image, (330, 120))
     pygame.display.flip()
 
     while player.health > 0 and opponent.health > 0:
@@ -113,40 +115,40 @@ def fight(player, opponent):
         pygame.draw.rect(screen, (150, 150, 150), (300, 300, 350, 50))
         pygame.display.flip()
         if num == 1:
-            x = font.render("You found a health ", True, (0, 0, 0))
-            y = font.render("potion! You gained " + str(num2) + " health.", True, (0, 0, 0))
+            x = font.render("You found a health ", True, (0, 100, 250))
+            y = font.render("potion! You gained " + str(num2) + " health.", True, (0, 100, 250))
             screen.blit(x, (320, 300))
             screen.blit(y, (320, 320))
             pygame.display.flip()
 
             player.health += num2
         if num == 2:
-            g = font.render("You found some armor!", True, (0, 0, 0))
-            h = font.render(" You gain " + str(num4) + " armor.", True, (0, 0, 0))
+            g = font.render("You found some armor!", True, (0, 100, 250))
+            h = font.render(" You gain " + str(num4) + " armor.", True, (0, 100, 250))
             screen.blit(g, (320, 300))
             screen.blit(h, (320, 320))
             pygame.display.flip()
 
             player.base_armor += num4
         if num == 3:
-            i = font.render("Your opponent found a health ", True, (0, 0, 0))
-            j = font.render("potion. It gains " + str(num2) + " health.", True, (0, 0, 0))
+            i = font.render("Your opponent found a health ", True, (0, 100, 250))
+            j = font.render("potion. It gains " + str(num2) + " health.", True, (0, 100, 250))
             screen.blit(i, (320, 300))
             screen.blit(j, (320, 320))
             pygame.display.flip()
 
             opponent.health += num2
         if num == 4:
-            m = font.render("You found a speed ", True, (0, 0, 0))
-            n = font.render("potion! You gained " + str(num3) + " speed.", True, (0, 0, 0))
+            m = font.render("You found a speed ", True, (0, 100, 250))
+            n = font.render("potion! You gained " + str(num3) + " speed.", True, (0, 100, 250))
             screen.blit(m, (320, 300))
             screen.blit(n, (320, 320))
             pygame.display.flip()
 
             player.speed += num3
         if num == 5:
-            r = font.render("Your opponent found a speed ", True, (0, 0, 0))
-            s = font.render("potion. It gains " + str(num3) + " health.", True, (0, 0, 0))
+            r = font.render("Your opponent found a speed ", True, (0, 100, 250))
+            s = font.render("potion. It gains " + str(num3) + " speed.", True, (0, 100, 250))
             screen.blit(r, (320, 300))
             screen.blit(s, (320, 320))
             pygame.display.flip()
@@ -158,7 +160,7 @@ def fight(player, opponent):
         pygame.event.pump()
         stat_font = pygame.font.Font('freesansbold.ttf', 20)
         name_text2 = stat_font.render('Name: ' + player.name, True, (0, 0, 0))
-        health_text = stat_font.render('Health: ' + str(player.health), True, (0, 0, 0))
+        health_text = stat_font.render('Health: ' + str(int(player.health)), True, (0, 0, 0))
         damage_text = stat_font.render('Attack Damage: ' + str(player.base_damage), True, (0, 0, 0))
         armor_text = stat_font.render('Armor: ' + str(player.base_armor), True, (0, 0, 0))
         speed_text = stat_font.render('Speed: ' + str(player.speed), True, (0, 0, 0))
@@ -169,7 +171,7 @@ def fight(player, opponent):
         screen.blit(speed_text, (30, 150))
 
         name_text3 = stat_font.render('Name: ' + opponent.name, True, (0, 0, 0))
-        health_text2 = stat_font.render('Health: ' + str(opponent.health), True, (0, 0, 0))
+        health_text2 = stat_font.render('Health: ' + str(int(opponent.health)), True, (0, 0, 0))
         damage_text2 = stat_font.render('Attack Damage: ' + str(opponent.base_damage), True, (0, 0, 0))
         armor_text2 = stat_font.render('Armor: ' + str(opponent.base_armor), True, (0, 0, 0))
         speed_text2 = stat_font.render('Speed: ' + str(opponent.speed), True, (0, 0, 0))
@@ -246,7 +248,23 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse = pygame.mouse.get_pos()
             if 220 <= mouse[0] <= 420 and 300 <= mouse[1] <= 400:
+                robot.health = 100
+                robot.speed = 10
+                robot.base_armor = 10
+                robot.base_damage = 10
+                evil_robot.health = 100
                 fight(robot, evil_robot)
+                if robot.health > evil_robot.health:
+                    screen.fill('gold')
+                    win_text = welcome_font.render('YOU WON!', True, (0, 0, 255))
+                    screen.blit(win_text, (200, 180))
+                    pygame.display.flip()
+                else:
+                    screen.fill('darkred')
+                    lose_text = welcome_font.render('YOU LOST. :(', True, (255, 255, 255))
+                    screen.blit(lose_text, (200, 180))
+                    pygame.display.flip()
+                time.sleep(5)
 
     # it will set background color of screen
     screen.fill((50, 255, 50))
