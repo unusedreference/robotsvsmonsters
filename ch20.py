@@ -193,6 +193,17 @@ while True:
     # set width of textfield so that text cannot get
     # outside of user's text input
     input_rect.w = max(100, text_surface.get_width() + 10)
+    
+    button = pygame.Rect((220, 300), (200, 100))
+    screen.fill('red3', rect=button)
+    pygame.draw.line(screen, (0, 0, 0), (220, 300), (420, 300), 10)
+    pygame.draw.line(screen, (0, 0, 0), (420, 300), (420, 400), 10)
+    pygame.draw.line(screen, (0, 0, 0), (420, 400), (220, 400), 10)
+    pygame.draw.line(screen, (0, 0, 0), (220, 400), (220, 300), 10)
+    button_font = pygame.font.Font('freesansbold.ttf', 50)
+    button_text = button_font.render('FIGHT', True, (0, 0, 0))
+    screen.blit(button_text, (245, 330))
+    pygame.display.flip()
 
     # display.flip() will update only a portion of the
     # screen to updated, not full area
