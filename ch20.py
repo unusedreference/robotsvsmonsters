@@ -195,7 +195,7 @@ while True:
     input_rect.w = max(100, text_surface.get_width() + 10)
     
     button = pygame.Rect((220, 300), (200, 100))
-    screen.fill('red3', rect=button)
+    screen.fill('dodgerblue', rect=button)
     pygame.draw.line(screen, (0, 0, 0), (220, 300), (420, 300), 10)
     pygame.draw.line(screen, (0, 0, 0), (420, 300), (420, 400), 10)
     pygame.draw.line(screen, (0, 0, 0), (420, 400), (220, 400), 10)
