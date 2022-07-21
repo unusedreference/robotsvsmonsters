@@ -1,6 +1,8 @@
 import random
-import pygame, sys
+import time
 
+import pygame, sys
+from time import sleep
 from ch1719 import Robot
 
 pygame.init()
@@ -30,13 +32,18 @@ button_text = button_font.render('PLAY', True, (0, 0, 0))
 screen.blit(button_text, (250, 330))
 pygame.display.flip()
 
-#name = input("What is the name of your robot?\n")
-#robot = Robot(name)
+
 evil_robot = Robot("opponent")
 
 
 def fight(player, opponent):
     pygame.event.pump()
+    turn_font = pygame.font.Font('freesansbold.ttf', 30)
+    turn_text = turn_font.render('YOUR TURN', True, (0, 0, 0))
+    ba_text = opponent.name + " built armor"
+    d_text = opponent.name + " built attack damage"
+    s_text = opponent.name + " built speed"
+    a_text = "You\'ve been attacked!"
     screen.fill((150, 150, 150))
     font = pygame.font.Font('freesansbold.ttf', 20)
     shape_size = (100, 100)
@@ -74,8 +81,20 @@ def fight(player, opponent):
 
     while player.health > 0 and opponent.health > 0:
         pygame.event.pump()
+        screen.blit(turn_text, (350, 30))
+        pygame.display.flip()
         player.action(opponent)
-        opponent.action2(player)
+        pygame.draw.rect(screen, (150, 150, 150), (350, 30, 250, 50))
+        pygame.display.flip()
+        b = "z"
+
+        b = opponent.action2(player, b)
+        b_text = font.render(b, True, (0, 0, 0))
+        screen.blit(b_text, (250, 30))
+        pygame.display.flip()
+        time.sleep(2)
+        pygame.draw.rect(screen, (150, 150, 150), (330, 30, 300, 50))
+        pygame.display.flip()
 
         if player.speed < 0:
             player.speed = 0
@@ -111,7 +130,7 @@ def fight(player, opponent):
             print("\nYour opponent found a speed potion! It gains " + str(num3) + " speed\n")
             opponent.speed += num3
 
-        pygame.draw.rect(screen, (150, 150, 150), (30, 30, 300, 300))
+        pygame.draw.rect(screen, (150, 150, 150), (30, 30, 300, 307))
         pygame.display.flip()
         pygame.event.pump()
         stat_font = pygame.font.Font('freesansbold.ttf', 20)
@@ -131,11 +150,11 @@ def fight(player, opponent):
         damage_text2 = stat_font.render('Attack Damage: ' + str(opponent.base_damage), True, (0, 0, 0))
         armor_text2 = stat_font.render('Armor: ' + str(opponent.base_armor), True, (0, 0, 0))
         speed_text2 = stat_font.render('Speed: ' + str(opponent.speed), True, (0, 0, 0))
-        screen.blit(name_text3, (30, 180))
-        screen.blit(health_text2, (30, 210))
-        screen.blit(armor_text2, (30, 240))
-        screen.blit(damage_text2, (30, 270))
-        screen.blit(speed_text2, (30, 300))
+        screen.blit(name_text3, (30, 200))
+        screen.blit(health_text2, (30, 230))
+        screen.blit(armor_text2, (30, 260))
+        screen.blit(damage_text2, (30, 290))
+        screen.blit(speed_text2, (30, 320))
         pygame.display.flip()
 
 
@@ -164,7 +183,7 @@ color_active = pygame.Color('black')
 
 # color_passive store color(chartreuse4) which is
 # color of input box.
-color_passive = pygame.Color('chartreuse4')
+color_passive = pygame.Color('white')
 color = color_passive
 
 active = False
@@ -180,8 +199,8 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if input_rect.collidepoint(event.pos):
                 active = True
-            else:
-                active = False
+            #else:
+                #active = False
 
         if event.type == pygame.KEYDOWN:
 
