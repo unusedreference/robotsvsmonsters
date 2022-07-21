@@ -26,13 +26,14 @@ class Robot:
         while var:
             for event in pygame.event.get():
                 pygame.event.pump()
-                #while event.type != pygame.MOUSEBUTTONDOWN:
+
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse = pygame.mouse.get_pos()
                     if 30 <= mouse[0] <= 130 and 350 <= mouse[1] <= 450:
                         self.attack(opponent)
+                        self.speed -= .5
                         var = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse = pygame.mouse.get_pos()
@@ -51,7 +52,7 @@ class Robot:
                         var = False
 
     def action2(self, player, c):
-        if player.base_armor < 5 or player.health < 15 or player.health > self.health + 10 or player.base_damage > self.base_damage + 1:
+        if player.base_armor < 5 or player.health < 15 or player.health > self.health + 5 or player.base_damage > self.base_damage + 1 or player.health == 100:
             if self.speed > 1 and self.base_damage > 1:
                 self.attack(player)
                 c = "You have been attacked!"

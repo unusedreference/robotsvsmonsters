@@ -40,10 +40,6 @@ def fight(player, opponent):
     pygame.event.pump()
     turn_font = pygame.font.Font('freesansbold.ttf', 30)
     turn_text = turn_font.render('YOUR TURN', True, (0, 0, 0))
-    ba_text = opponent.name + " built armor"
-    d_text = opponent.name + " built attack damage"
-    s_text = opponent.name + " built speed"
-    a_text = "You\'ve been attacked!"
     screen.fill((150, 150, 150))
     font = pygame.font.Font('freesansbold.ttf', 20)
     shape_size = (100, 100)
@@ -84,7 +80,7 @@ def fight(player, opponent):
         screen.blit(turn_text, (350, 30))
         pygame.display.flip()
         player.action(opponent)
-        pygame.draw.rect(screen, (150, 150, 150), (350, 30, 250, 50))
+        pygame.draw.rect(screen, (150, 150, 150), (250, 30, 350, 50))
         pygame.display.flip()
         b = "z"
 
@@ -93,7 +89,7 @@ def fight(player, opponent):
         screen.blit(b_text, (250, 30))
         pygame.display.flip()
         time.sleep(2)
-        pygame.draw.rect(screen, (150, 150, 150), (330, 30, 300, 50))
+        pygame.draw.rect(screen, (150, 150, 150), (300, 30, 350, 50))
         pygame.display.flip()
 
         if player.speed < 0:
@@ -114,23 +110,50 @@ def fight(player, opponent):
         num2 = random.randint(5, 15)
         num3 = random.randint(5, 10)
         num4 = random.randint(1, 5)
+        pygame.draw.rect(screen, (150, 150, 150), (300, 300, 350, 50))
+        pygame.display.flip()
         if num == 1:
-            print("\nYou found a health potion! You gained " + str(num2) + " health.")
+            x = font.render("You found a health ", True, (0, 0, 0))
+            y = font.render("potion! You gained " + str(num2) + " health.", True, (0, 0, 0))
+            screen.blit(x, (320, 300))
+            screen.blit(y, (320, 320))
+            pygame.display.flip()
+
             player.health += num2
         if num == 2:
-            print("\nYou found some armor! You gain " + str(num4) + " armor\n")
+            g = font.render("You found some armor!", True, (0, 0, 0))
+            h = font.render(" You gain " + str(num4) + " armor.", True, (0, 0, 0))
+            screen.blit(g, (320, 300))
+            screen.blit(h, (320, 320))
+            pygame.display.flip()
+
             player.base_armor += num4
         if num == 3:
-            print("\nYour opponent found a health potion. It gains " + str(num2) + " health.\n")
+            i = font.render("Your opponent found a health ", True, (0, 0, 0))
+            j = font.render("potion. It gains " + str(num2) + " health.", True, (0, 0, 0))
+            screen.blit(i, (320, 300))
+            screen.blit(j, (320, 320))
+            pygame.display.flip()
+
             opponent.health += num2
         if num == 4:
-            print("\nYou found a speed potion! You gain " + str(num3) + " speed\n")
+            m = font.render("You found a speed ", True, (0, 0, 0))
+            n = font.render("potion! You gained " + str(num3) + " speed.", True, (0, 0, 0))
+            screen.blit(m, (320, 300))
+            screen.blit(n, (320, 320))
+            pygame.display.flip()
+
             player.speed += num3
         if num == 5:
-            print("\nYour opponent found a speed potion! It gains " + str(num3) + " speed\n")
+            r = font.render("Your opponent found a speed ", True, (0, 0, 0))
+            s = font.render("potion. It gains " + str(num3) + " health.", True, (0, 0, 0))
+            screen.blit(r, (320, 300))
+            screen.blit(s, (320, 320))
+            pygame.display.flip()
+
             opponent.speed += num3
 
-        pygame.draw.rect(screen, (150, 150, 150), (30, 30, 300, 307))
+        pygame.draw.rect(screen, (150, 150, 150), (30, 30, 285, 307))
         pygame.display.flip()
         pygame.event.pump()
         stat_font = pygame.font.Font('freesansbold.ttf', 20)
