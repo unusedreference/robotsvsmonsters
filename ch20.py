@@ -111,8 +111,33 @@ def fight(player, opponent):
             print("\nYour opponent found a speed potion! It gains " + str(num3) + " speed\n")
             opponent.speed += num3
 
-        player.get_stats()
-        opponent.get_stats()
+        pygame.draw.rect(screen, (150, 150, 150), (30, 30, 300, 300))
+        pygame.display.flip()
+        pygame.event.pump()
+        stat_font = pygame.font.Font('freesansbold.ttf', 20)
+        name_text2 = stat_font.render('Name: ' + player.name, True, (0, 0, 0))
+        health_text = stat_font.render('Health: ' + str(player.health), True, (0, 0, 0))
+        damage_text = stat_font.render('Attack Damage: ' + str(player.base_damage), True, (0, 0, 0))
+        armor_text = stat_font.render('Armor: ' + str(player.base_armor), True, (0, 0, 0))
+        speed_text = stat_font.render('Speed: ' + str(player.speed), True, (0, 0, 0))
+        screen.blit(name_text2, (30, 30))
+        screen.blit(health_text, (30, 60))
+        screen.blit(armor_text, (30, 90))
+        screen.blit(damage_text, (30, 120))
+        screen.blit(speed_text, (30, 150))
+
+        name_text3 = stat_font.render('Name: ' + opponent.name, True, (0, 0, 0))
+        health_text2 = stat_font.render('Health: ' + str(opponent.health), True, (0, 0, 0))
+        damage_text2 = stat_font.render('Attack Damage: ' + str(opponent.base_damage), True, (0, 0, 0))
+        armor_text2 = stat_font.render('Armor: ' + str(opponent.base_armor), True, (0, 0, 0))
+        speed_text2 = stat_font.render('Speed: ' + str(opponent.speed), True, (0, 0, 0))
+        screen.blit(name_text3, (30, 180))
+        screen.blit(health_text2, (30, 210))
+        screen.blit(armor_text2, (30, 240))
+        screen.blit(damage_text2, (30, 270))
+        screen.blit(speed_text2, (30, 300))
+        pygame.display.flip()
+
 
 
 var = True
@@ -172,6 +197,15 @@ while True:
                 user_text += event.unicode
 
         robot = Robot(user_text)
+
+        pygame.event.pump()
+        if event.type == pygame.QUIT:
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse = pygame.mouse.get_pos()
+            if 220 <= mouse[0] <= 420 and 300 <= mouse[1] <= 400:
+                fight(robot, evil_robot)
+
     # it will set background color of screen
     screen.fill((50, 255, 50))
 
@@ -204,7 +238,7 @@ while True:
     button_text = button_font.render('FIGHT', True, (0, 0, 0))
     screen.blit(button_text, (245, 330))
     pygame.display.flip()
-    
+
     # display.flip() will update only a portion of the
     # screen to updated, not full area
     pygame.display.flip()
@@ -212,20 +246,7 @@ while True:
     # clock.tick(60) means that for every second at most
     # 60 frames should be passed.
     clock.tick(60)
-#ans = "y"
-#while ans == "y" or ans == "Y":
-    #ans = "z"
-    #while (ans != "Y" and ans != "N") and (ans != "y" and ans != "n"):
-        #ans = input("Do you want to fight? Y/N\n")
-        #if ans == "N" or ans == "n":
-            #print("Program ended.")
-            #sys.exit()
-        #elif (ans != "Y" and ans != "N") and (ans != "y" and ans != "n"):
-            #print("Invalid input.")
-        #else:
-            #pygame.display.flip()
-            #fight(robot, evil_robot)
-            #ans = "y"
+
 
 if robot.health <= evil_robot.health:
     print("You lost!")
