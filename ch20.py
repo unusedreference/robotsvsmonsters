@@ -30,8 +30,8 @@ button_text = button_font.render('PLAY', True, (0, 0, 0))
 screen.blit(button_text, (250, 330))
 pygame.display.flip()
 
-name = input("What is the name of your robot?\n")
-robot = Robot(name)
+#name = input("What is the name of your robot?\n")
+#robot = Robot(name)
 evil_robot = Robot("opponent")
 
 
@@ -114,30 +114,107 @@ def fight(player, opponent):
         player.get_stats()
         opponent.get_stats()
 
+
 var = True
 while var:
     for event in pygame.event.get():
         pygame.event.pump()
-        #while event.type != pygame.MOUSEBUTTONDOWN:
         if event.type == pygame.QUIT:
-                sys.exit()
+            sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouse = pygame.mouse.get_pos()
-            if 30 <= mouse[0] <= 130 and 350 <= mouse[1] <= 450:
-                self.attack(opponent)
+            if 220 <= mouse[0] <= 420 and 300 <= mouse[1] <= 400:
                 var = False
-ans = "y"
-while ans == "y" or ans == "Y":
-    ans = "z"
-    while (ans != "Y" and ans != "N") and (ans != "y" and ans != "n"):
-        ans = input("Do you want to fight? Y/N\n")
-        if ans == "N" or ans == "n":
-            print("Program ended.")
-        elif (ans != "Y" and ans != "N") and (ans != "y" and ans != "n"):
-            print("Invalid input.")
-        else:
-            pygame.display.flip()
-            fight(robot, evil_robot)
+
+
+
+base_font = pygame.font.Font(None, 32)
+user_text = ''
+
+# create rectangle
+input_rect = pygame.Rect(200, 200, 140, 32)
+
+# color_active stores color(lightskyblue3) which
+# gets active when input box is clicked by user
+color_active = pygame.Color('lightskyblue3')
+
+# color_passive store color(chartreuse4) which is
+# color of input box.
+color_passive = pygame.Color('chartreuse4')
+color = color_passive
+
+active = False
+
+while True:
+    for event in pygame.event.get():
+
+        # if user types QUIT then the screen will close
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if input_rect.collidepoint(event.pos):
+                active = True
+            else:
+                active = False
+
+        if event.type == pygame.KEYDOWN:
+
+            # Check for backspace
+            if event.key == pygame.K_BACKSPACE:
+
+                # get text input from 0 to -1 i.e. end.
+                user_text = user_text[:-1]
+
+            # Unicode standard is used for string
+            # formation
+            else:
+                user_text += event.unicode
+
+            robot = Robot(user_text)
+    # it will set background color of screen
+    screen.fill((50, 255, 50))
+
+    if active:
+        color = color_active
+    else:
+        color = color_passive
+
+    # draw rectangle and argument passed which should
+    # be on screen
+    pygame.draw.rect(screen, color, input_rect)
+
+    text_surface = base_font.render(user_text, True, (255, 255, 255))
+
+    # render at position stated in arguments
+    screen.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
+
+    # set width of textfield so that text cannot get
+    # outside of user's text input
+    input_rect.w = max(100, text_surface.get_width() + 10)
+
+    # display.flip() will update only a portion of the
+    # screen to updated, not full area
+    pygame.display.flip()
+
+    # clock.tick(60) means that for every second at most
+    # 60 frames should be passed.
+    clock.tick(60)
+#ans = "y"
+#while ans == "y" or ans == "Y":
+    #ans = "z"
+    #while (ans != "Y" and ans != "N") and (ans != "y" and ans != "n"):
+        #ans = input("Do you want to fight? Y/N\n")
+        #if ans == "N" or ans == "n":
+            #print("Program ended.")
+            #sys.exit()
+        #elif (ans != "Y" and ans != "N") and (ans != "y" and ans != "n"):
+            #print("Invalid input.")
+        #else:
+            #pygame.display.flip()
+            #fight(robot, evil_robot)
+            #ans = "y"
 
     if robot.health <= evil_robot.health:
         print("You lost!")

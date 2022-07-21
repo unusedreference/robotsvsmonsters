@@ -32,7 +32,7 @@ class Robot:
     def action(self, opponent):
         print("What action do you want to take? attack, \n"
                     + "build speed,  raise damage, or\n"
-                    + " build armor?\n")
+                    + "build armor?\n")
         var = True
         while var:
             for event in pygame.event.get():
