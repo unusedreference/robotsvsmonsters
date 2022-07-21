@@ -13,7 +13,6 @@ class Robot:
     def take_damage(self, damage_dealt):
         self.health -= damage_dealt
         self.speed -= .5
-        self.base_damage -= .5
         self.base_armor -= .5
 
     def attack(self, opponent):
@@ -21,18 +20,8 @@ class Robot:
                     (self.base_damage * (opponent.base_armor / 50)) + (opponent.speed / 3))
         opponent.take_damage(damage_dealt)
 
-    def get_stats(self):
-        print("Name: " + self.name)
-        print("Health: " + str(self.health))
-        print("Armor: " + str(self.base_armor))
-        print("Attack: " + str(self.base_damage))
-        print("Speed: " + str(self.speed))
-        print("\n")
 
     def action(self, opponent):
-        print("What action do you want to take? attack, \n"
-                    + "build speed,  raise damage, or\n"
-                    + "build armor?\n")
         var = True
         while var:
             for event in pygame.event.get():
@@ -61,23 +50,21 @@ class Robot:
                         self.build_armor()
                         var = False
 
-
-
-
-    def action2(self, player):
+    def action2(self, player, c):
         if player.base_armor < 5 or player.health < 15 or player.health > self.health + 10 or player.base_damage > self.base_damage + 1:
             if self.speed > 1 and self.base_damage > 1:
                 self.attack(player)
-                print("You have been attacked!")
+                c = "You have been attacked!"
         elif self.base_armor < 5 or player.speed > 20 or player.base_armor > 20:
             self.build_armor()
-            print("Your opponent built armor.")
+            c = "Your opponent built armor."
         elif player.base_damage > 12 or self.base_damage < 10 or player.speed > 12:
             self.build_attack()
-            print("Your opponent has built attack damage.")
+            c = "Your opponent has built attack damage."
         else:
             self.build_speed()
-            print("Your opponent has built speed.")
+            c = "Your opponent has built speed."
+        return c
 
     def build_attack(self):
         self.base_armor -= 1
